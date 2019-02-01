@@ -3,3 +3,5 @@
 echo "Testing...."
 echo "...done"
 
+exit 0
+

@@ -3,3 +3,5 @@
 echo "Compiling...."
 echo "...done"
 
+exit 0
+

@@ -1,20 +1,26 @@
+os: linux
+
+linux:
+  - trusty
+
 stages:
   - compile
-    script: scripts/compile.sh
+    script: bash scripts/compile.sh
   - test
-    script: scripts/test.sh
+    script: bash scripts/test.sh
   - name: deploy-staging
     if: branch = staging
-    script: echo "Deploying to staging s3"
-    deploy:
-    - provider: s3
-      ... other config
-      bucket: my-staging-bucket
+    script: bash -c echo "Deploying to staging s3"
+		deploy:
+			provider: script
+			script: bash scripts/deploy.sh staging
+			on:
+				branch: develop
   - name: deploy-prod
     if: branch = production
-    script: echo "Deploying to production s3"
-    deploy:
-    - provider: s3
-      ... other config
-      bucket: my-prod-bucket
-
+    script: bash -c echo "Deploying to production s3"
+		deploy:
+			provider: script
+			script: bash scripts/deploy.sh production
+			on:
+				branch: production
