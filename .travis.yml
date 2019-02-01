@@ -17,14 +17,12 @@ jobs:
         script: bash scripts/test.sh
 
     - stage: deploy-staging
-        if: branch = staging
         script: bash -c echo "Deploying to staging s3"
         deploy:
           provider: script
           script: bash scripts/deploy.sh staging
 
     - stage: deploy-prod
-        if: branch = production
         script: bash -c echo "Deploying to production s3"
         deploy:
           provider: script
