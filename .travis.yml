@@ -3,6 +3,11 @@ os: linux
 linux:
   - trusty
 
+# * https://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
+sudo:
+  - false
+
+
 stages:
   - compile
     script: bash scripts/compile.sh
@@ -15,7 +20,7 @@ stages:
 			provider: script
 			script: bash scripts/deploy.sh staging
 			on:
-				branch: develop
+				branch: staging
   - name: deploy-prod
     if: branch = production
     script: bash -c echo "Deploying to production s3"
