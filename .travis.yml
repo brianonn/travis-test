@@ -1,0 +1,20 @@
+stages:
+  - compile
+    script: scripts/compile.sh
+  - test
+    script: scripts/test.sh
+  - name: deploy-staging
+    if: branch = staging
+    script: echo "Deploying to staging s3"
+    deploy:
+    - provider: s3
+      ... other config
+      bucket: my-staging-bucket
+  - name: deploy-prod
+    if: branch = production
+    script: echo "Deploying to production s3"
+    deploy:
+    - provider: s3
+      ... other config
+      bucket: my-prod-bucket
+
