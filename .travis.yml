@@ -24,6 +24,9 @@ jobs:
       deploy:
         provider: script
         script: bash scripts/deploy.sh staging
+        on:
+          branch: staging
+          condition: $TRAVIS_BRANCH = staging
 
     - stage: deploy-prod
       if: branch = production
@@ -32,3 +35,6 @@ jobs:
       deploy:
         provider: script
         script: bash scripts/deploy.sh production
+        on:
+          branch: production
+          condition: $TRAVIS_BRANCH = production
