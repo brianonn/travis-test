@@ -8,24 +8,24 @@ sudo:
   - false
 
 
-stages:
-  - compile
-    script: bash scripts/compile.sh
-  - test
-    script: bash scripts/test.sh
-  - name: deploy-staging
-    if: branch = staging
-    script: bash -c echo "Deploying to staging s3"
-		deploy:
-			provider: script
-			script: bash scripts/deploy.sh staging
-			on:
-				branch: staging
-  - name: deploy-prod
-    if: branch = production
-    script: bash -c echo "Deploying to production s3"
-		deploy:
-			provider: script
-			script: bash scripts/deploy.sh production
-			on:
-				branch: production
+jobs:
+  include:
+    - stage: compile
+        script: bash scripts/compile.sh
+
+    - stage: test
+        script: bash scripts/test.sh
+
+    - stage: deploy-staging
+        if: branch = staging
+        script: bash -c echo "Deploying to staging s3"
+        deploy:
+          provider: script
+          script: bash scripts/deploy.sh staging
+
+    - stage: deploy-prod
+        if: branch = production
+        script: bash -c echo "Deploying to production s3"
+        deploy:
+          provider: script
+          script: bash scripts/deploy.sh production
